@@ -45,13 +45,33 @@ pip install -r requirements.txt
 We provide the Non-stationary Transformer experiment scripts and hyperparameters of all benchmark dataset under the folder `./scripts`.
 
 ```bash
-# Transformer with our framework
+# Transformer with papers framework
 bash ./scripts/ECL_script/ns_Transformer.sh
 bash ./scripts/Traffic_script/ns_Transformer.sh
 bash ./scripts/Weather_script/ns_Transformer.sh
 bash ./scripts/ILI_script/ns_Transformer.sh
 bash ./scripts/Exchange_script/ns_Transformer.sh
 bash ./scripts/ETT_script/ns_Transformer.sh
+```
+```bash
+# Transformer with our change point framework
+bash ./scripts/ECL_script/ns_Transformer_change_point.sh
+bash ./scripts/Traffic_script/ns_Transformer_change_point.sh
+bash ./scripts/Weather_script/ns_Transformer_change_point.sh
+bash ./scripts/ILI_script/ns_Transformer_change_point.sh
+bash ./scripts/Exchange_script/ns_Transformer_change_point.sh
+bash ./scripts/ETT_script/ns_Transformer_change_point.sh
+bash ./scripts/Stock_scripts/ns_Transformer_change_point.sh
+```
+```bash
+# Transformer with our arima and transformer framework
+bash ./scripts/ECL_script/ns_Transformer_arima.sh
+bash ./scripts/Traffic_script/ns_Transformer_arima.sh
+bash ./scripts/Weather_script/ns_Transformer_arima.sh
+bash ./scripts/ILI_script/ns_Transformer_arima.sh
+bash ./scripts/Exchange_script/ns_Transformer_arima.sh
+bash ./scripts/ETT_script/ns_Transformer_arima.sh
+bash ./scripts/Stock_scripts/ns_Transformer_arima.sh
 ```
 
 ```bash
