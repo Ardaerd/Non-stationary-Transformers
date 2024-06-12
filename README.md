@@ -9,10 +9,14 @@ This is the codebase for the paper:
 
 There are already several discussions about our paper, we appreciate a lot for their valuable comments and efforts: [[Official]](https://mp.weixin.qq.com/s/LkpkTiNBVBYA-FqzAdy4dw), [[OpenReview]](https://openreview.net/forum?id=ucNDIDRNjjv), [[Zhihu]](https://zhuanlan.zhihu.com/p/535931701).
 
-## Architecture
+## Their Architecture
 
 ![arch](./figures/arch.png)
+## Arima and Transformer Architecture
+![arch](./figures/arima.jpeg)
 
+## Change Point Architecture
+![arch](./figures/change.jpeg)
 ### Series Stationarization
 
 Series Stationarization unifies the statistics of each input and converts the output with restored statistics for better predictability. 
