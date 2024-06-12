@@ -1,7 +1,7 @@
 from data_provider.data_factory import data_provider
 from exp.exp_basic import Exp_Basic
 from models import Transformer, Informer, Autoformer
-from ns_models import ns_Transformer, ns_Informer, ns_Autoformer
+from ns_models import ns_Transformer, ns_Informer, ns_Autoformer, ns_Transformer_new,ns_Transformer_change_point
 from utils.tools import EarlyStopping, adjust_learning_rate, visual
 from utils.metrics import metric
 
@@ -12,6 +12,7 @@ from torch import optim
 
 import os
 import time
+from tqdm import tqdm
 
 import warnings
 import matplotlib.pyplot as plt
@@ -32,8 +33,10 @@ class Exp_Main(Exp_Basic):
             'ns_Transformer': ns_Transformer,
             'ns_Informer': ns_Informer,
             'ns_Autoformer': ns_Autoformer,
+            'ns_Transformer_arima':ns_Transformer_new,
+            'ns_Transformer_change_point': ns_Transformer_change_point,
         }
-        model = model_dict[self.args.model].Model(self.args).float()
+        model = model_dict[self.args.model].Model(self.args).float()  # Ensure the model is in float
 
         if self.args.use_multi_gpu and self.args.use_gpu:
             model = nn.DataParallel(model, device_ids=self.args.device_ids)
@@ -55,10 +58,9 @@ class Exp_Main(Exp_Basic):
         total_loss = []
         self.model.eval()
         with torch.no_grad():
-            for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(vali_loader):
+            for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(tqdm(vali_loader, desc="Validation")):
                 batch_x = batch_x.float().to(self.device)
-                batch_y = batch_y.float()
-
+                batch_y = batch_y.float().to(self.device)
                 batch_x_mark = batch_x_mark.float().to(self.device)
                 batch_y_mark = batch_y_mark.float().to(self.device)
 
@@ -86,7 +88,7 @@ class Exp_Main(Exp_Basic):
 
                 loss = criterion(pred, true)
 
-                total_loss.append(loss)
+                total_loss.append(loss.item())  # Store loss.item() to keep it a float
         total_loss = np.average(total_loss)
         self.model.train()
         return total_loss
@@ -117,11 +119,10 @@ class Exp_Main(Exp_Basic):
 
             self.model.train()
             epoch_time = time.time()
-            for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(train_loader):
+            for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(tqdm(train_loader, desc=f"Training Epoch {epoch+1}/{self.args.train_epochs}")):
                 iter_count += 1
                 model_optim.zero_grad()
                 batch_x = batch_x.float().to(self.device)
-
                 batch_y = batch_y.float().to(self.device)
                 batch_x_mark = batch_x_mark.float().to(self.device)
                 batch_y_mark = batch_y_mark.float().to(self.device)
@@ -187,7 +188,7 @@ class Exp_Main(Exp_Basic):
 
         best_model_path = path + '/' + 'checkpoint.pth'
         self.model.load_state_dict(torch.load(best_model_path))
-
+        torch.save(self.model.state_dict(), 'ns_transformer_weights.pth')
         return self.model
 
     def test(self, setting, test=0):
@@ -204,10 +205,9 @@ class Exp_Main(Exp_Basic):
 
         self.model.eval()
         with torch.no_grad():
-            for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(test_loader):
+            for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(tqdm(test_loader, desc="Testing")):
                 batch_x = batch_x.float().to(self.device)
                 batch_y = batch_y.float().to(self.device)
-
                 batch_x_mark = batch_x_mark.float().to(self.device)
                 batch_y_mark = batch_y_mark.float().to(self.device)
 
@@ -286,7 +286,7 @@ class Exp_Main(Exp_Basic):
         with torch.no_grad():
             for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(pred_loader):
                 batch_x = batch_x.float().to(self.device)
-                batch_y = batch_y.float()
+                batch_y = batch_y.float().to(self.device)
                 batch_x_mark = batch_x_mark.float().to(self.device)
                 batch_y_mark = batch_y_mark.float().to(self.device)
 
@@ -319,3 +319,4 @@ class Exp_Main(Exp_Basic):
         np.save(folder_path + 'real_prediction.npy', preds)
 
         return
+
