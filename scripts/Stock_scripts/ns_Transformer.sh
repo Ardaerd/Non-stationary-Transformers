@@ -1,0 +1,23 @@
+  python -u run.py \
+  --is_training 1 \
+  --root_path ./dataset/stock/ \
+  --data_path EMP-A.TO_Stock_Data.csv  \
+  --model_id EMP-A_96_96 \
+  --model ns_Transformer \
+  --data custom \
+  --features MS \
+  --freq d \
+  --seq_len 96 \
+  --label_len 48 \
+  --pred_len 96 \
+  --e_layers 2 \
+  --d_layers 1 \
+  --factor 3 \
+  --enc_in 8 \
+  --dec_in 8 \
+  --c_out 8 \
+  --gpu 0 \
+  --des 'Exp_h16_l2' \
+  --p_hidden_dims 16 16 \
+  --p_hidden_layers 2 \
+  --itr 1 & 
