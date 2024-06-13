@@ -40,7 +40,7 @@ De-stationary Attention is devised to recover the intrinsic non-stationary infor
 ```
 pip install -r requirements.txt
 ```
-2. All the six benchmark datasets can be obtained from [Google Drive](https://drive.google.com/file/d/1CC4ZrUD4EKncndzgy5PSTzOPSqcuyqqj/view?usp=sharing) or [Tsinghua Cloud](https://cloud.tsinghua.edu.cn/f/b8f4a78a39874ac9893e/?dl=1).
+2. All the six benchmark datasets can be obtained from [Google Drive](https://drive.google.com/drive/folders/10qYO-N10LmyZhHg0KfAEKAQVho4HL2Dm?usp=sharing).
 
 ## Training scripts
 
@@ -56,6 +56,7 @@ bash ./scripts/Weather_script/ns_Transformer.sh
 bash ./scripts/ILI_script/ns_Transformer.sh
 bash ./scripts/Exchange_script/ns_Transformer.sh
 bash ./scripts/ETT_script/ns_Transformer.sh
+bash ./scripts/Stock_scripts/ns_Transformer.sh
 ```
 ```bash
 # Transformer with our change point framework
@@ -103,48 +104,24 @@ bash ./scripts/Weather_script/ns_Autoformer.sh
 ```
 
 ## Experiment Results
+### Our Results and Paper Comparison
+![arch](./figures/emp_result.jpeg)
+![arch](./figures/etth1_result.jpeg)
+![arch](./figures/exchange_result.jpeg)
 
-### Main Results
+### Main Results From Paper
 
 For multivariate forecasting results, the vanilla Transformer equipped with our framework consistently achieves state-of-the-art performance in all six benchmarks and prediction lengths.
 
 ![arch](./figures/main_results.png)
 
-### Model Promotion
+### Model Promotion From Paper
 
 By applying our framework to six mainstream Attention-based models. Our method consistently improves the forecasting ability. Overall, it achieves averaged **49.43%** promotion on Transformer, **47.34%** on Informer, **46.89%** on Reformer, **10.57%** on Autoformer, **5.17%** on ETSformer and **4.51%** on FEDformer, making each of them surpass previous state-of-the-art.
 
 ![arch](./figures/promotion.png)
 
-## Future Work
-
-We will keep equip the following models with our proposed Non-stationary Transformers framework:
-
-- [x] Transformer
-- [x] Autoformer
-- [x] Informer
-- [x] ETSformer
-- [x] Reformer
-- [x] FEDformer
-
-## Citation
-
-If you find this repo useful, please cite our paper. 
-
-```
-@article{liu2022non,
-  title={Non-stationary Transformers: Exploring the Stationarity in Time Series Forecasting},
-  author={Liu, Yong and Wu, Haixu and Wang, Jianmin and Long, Mingsheng},
-  booktitle={Advances in Neural Information Processing Systems},
-  year={2022}
-}
-```
 
 ## Contact
 
-If you have any questions or want to use the code, please contact liuyong21@mails.tsinghua.edu.cn.
-
-
-## Acknowledgement
-
-This repo is built on the [Autoformer repo](https://github.com/thuml/Autoformer), we appreciate the authors a lot for their valuable code and efforts.
+If you have any questions or want to use the code, please contact berkay.acbay@ozu.edu.tr , arda.erdogan@ozu.edu.tr or gunes.altiner@ozu.edu.tr.
